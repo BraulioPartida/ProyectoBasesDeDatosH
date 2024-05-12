@@ -37,7 +37,7 @@
 /* Se hace una exploración para determinar las columnas que contienen caracteres distintos de letras y números:) */
 
     -- iso3_code
-    SELECT iso3_code
+    SELECT DISTINCT iso3_code
         FROM cleaning.homicides
         WHERE iso3_code ~* '[^{a-z_}]';
 
@@ -57,9 +57,10 @@
 
 
     -- country
-    SELECT country
+    SELECT DISTINCT country
         FROM cleaning.homicides
-        WHERE country ~* '[^{a-z,() }]' AND country NOT LIKE '%AND%' AND country NOT LIKE '%OF%';
+        WHERE country ~* '[^{a-z,() }]' AND country NOT LIKE '%AND%'
+          AND country NOT LIKE '%OF%';
 
     UPDATE cleaning.homicides
     SET country = CASE
@@ -86,21 +87,21 @@
     -- region
     SELECT region, COUNT(*)
         FROM cleaning.homicides
-    GROUP BY region ;
+        GROUP BY region ;
 
     -- subregion
     SELECT subregion, COUNT(*)
         FROM cleaning.homicides
-    GROUP BY subregion ;
+        GROUP BY subregion ;
 
     UPDATE cleaning.homicides
-    SET subregion = replace(subregion, '-', ' ')
-    WHERE subregion LIKE '%-%';
+        SET subregion = replace(subregion, '-', ' ')
+        WHERE subregion LIKE '%-%';
 
     -- indicator
     SELECT indicator, COUNT(*)
         FROM cleaning.homicides
-    GROUP BY indicator;
+        GROUP BY indicator;
 
     DELETE FROM cleaning.homicides WHERE indicator = 'PERSONS ARRESTED/SUSPECTED FOR INTENTIONAL HOMICIDE';
     DELETE FROM cleaning.homicides WHERE indicator = 'VICTIMS OF INTENTIONAL HOMICIDE - REGIONAL ESTIMATE';
@@ -108,18 +109,18 @@
 
     SELECT indicator, COUNT(*)
         FROM cleaning.homicides
-    WHERE indicator ~* '[^{a-z }]'
-    GROUP BY indicator;
+        WHERE indicator ~* '[^{a-z }]'
+        GROUP BY indicator;
 
     -- dimension
     SELECT dimension, COUNT(*)
         FROM cleaning.homicides
-    GROUP BY dimension;
+        GROUP BY dimension;
 
     -- category
     SELECT category, COUNT(*)
         FROM cleaning.homicides
-    GROUP BY category;
+        GROUP BY category;
 
     UPDATE cleaning.homicides
     SET category = CASE
@@ -142,7 +143,7 @@
     -- sex
     SELECT sex, COUNT (*)
         FROM cleaning.homicides
-    GROUP BY sex;
+        GROUP BY sex;
 
     -- age
     SELECT DISTINCT age
@@ -155,34 +156,31 @@
         END
     WHERE age LIKE '% -%' OR age = '60 AND OLDER';
 
-  DELETE FROM cleaning.homicides WHERE age = 'UNKNOWN';
+    DELETE FROM cleaning.homicides WHERE age = 'UNKNOWN';
 
     -- year
     SELECT year, COUNT (*)
         FROM cleaning.homicides
-    GROUP BY year;
+        GROUP BY year;
 
     -- unit_of_measurement
     SELECT unit_of_measurement, COUNT (*)
         FROM cleaning.homicides
-    GROUP BY unit_of_measurement;
+        GROUP BY unit_of_measurement;
 
     DELETE FROM cleaning.homicides WHERE unit_of_measurement = 'RATE PER 100,000 POPULATION';
     ALTER TABLE cleaning.homicides DROP COLUMN unit_of_measurement;
 
-    SELECT *
-        FROM cleaning.homicides;
-
     -- value
     SELECT value, COUNT (*)
         FROM cleaning.homicides
-    GROUP BY value;
+        GROUP BY value;
 
     -- source
     SELECT source, COUNT (*)
         FROM cleaning.homicides
-    GROUP BY source;
+        GROUP BY source;
 
-    SELECT source
+    SELECT DISTINCT source
         FROM cleaning.homicides
         WHERE source ~* '[^{a-z/ 0-9}]' AND source NOT LIKE '%-%';

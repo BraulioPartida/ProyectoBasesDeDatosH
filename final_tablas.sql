@@ -1,36 +1,68 @@
-DROP SCHEMA IF EXISTS final CASCADE;
-CREATE SCHEMA IF NOT EXISTS final;
+----Insercion de atributo----
+    ALTER TABLE cleaning.homicides ADD COLUMN development TEXT;
 
--- Creación de tablas a partir de la normalización en forma Boyce-Codd:
+    CREATE TABLE IF NOT EXISTS cleaning.temp_country(
+        name text
+    );
 
-CREATE TABLE final.category (
-	id SERIAL PRIMARY KEY,
-	category TEXT NOT NULL,
-	dimension TEXT NOT NULL,
-	development TEXT);
-CREATE TABLE final.country(
-	id SERIAL PRIMARY KEY,
-	iso_code TEXT NOT NULL,
-	name TEXT NOT NULL,
-	region TEXT NOT NULL,
-	subregion TEXT NOT NULL);
-CREATE TABLE final.homicides (
-	id SERIAL PRIMARY KEY,
-	category_id SERIAL REFERENCES final.category (id),
-	country_id SERIAL REFERENCES final.country (id),
-	indicator TEXT NOT NULL,
-	sex TEXT NOT NULL,
-	age TEXT NOT NULL,
-	year TEXT NOT NULL,
-	unit_of_measurement TEXT NOT NULL,
-	value NUMERIC NOT NULL,
-	source TEXT NOT NULL);
-	
--- Inserción de los datos limpios en las tablas.
-INSERT INTO final.category (category, dimension) 
-	SELECT category, dimension FROM cleaning.homicides;
-INSERT INTO final.country (iso_code, name, region, subregion) 
-	SELECT iso3_code, country, region, subregion FROM cleaning.homicides;
-INSERT INTO final.homicides (indicator, sex, age, year, unit_of_measurement, value, source)
-	SELECT indicator, sex, age, year, unit_of_measurement, value, source FROM cleaning.homicides;
-SELECT * FROM final.homicides;
+    --(Ejecutar primero lo anterior)
+    /*COPY cleaning.temp_country(name) FROM '' WITH (FORMAT CSV, HEADER true, DELIMITER ',');
+
+
+    UPDATE cleaning.homicides
+        SET development = CASE
+            WHEN country IN (SELECT TRIM(upper(name)) FROM cleaning.temp_country) THEN 'DEVELOPED'
+            WHEN country = 'REPUBLIC OF KOREA' THEN 'DEVELOPED'
+            WHEN country = 'UNITED STATES OF AMERICA' THEN 'DEVELOPED'
+            WHEN country = 'CZECHIA' THEN 'DEVELOPED'
+            ELSE 'SUBDEVELOPED'
+            END
+        WHERE homicides.development IS NULL;
+
+    DROP TABLE IF EXISTS cleaning.temp_country;*/
+
+--Creación schema
+    DROP SCHEMA IF EXISTS public CASCADE;
+    CREATE SCHEMA IF NOT EXISTS public;
+
+----Creación de tablas a partir de la normalización en forma Boyce-Codd:
+
+    CREATE TABLE category (
+        name TEXT PRIMARY KEY,
+        dimension TEXT NOT NULL
+    );
+
+    CREATE TABLE country(
+        iso_code TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        region TEXT NOT NULL,
+        subregion TEXT NOT NULL,
+        development TEXT NOT NULL
+    );
+
+    CREATE TABLE homicides (
+        id SERIAL PRIMARY KEY,
+        category_id TEXT REFERENCES category (name) ON DELETE CASCADE ON UPDATE RESTRICT,
+        country_id TEXT REFERENCES country (iso_code) ON DELETE CASCADE ON UPDATE RESTRICT,
+        indicator TEXT NOT NULL,
+        sex TEXT NOT NULL,
+        age TEXT NOT NULL,
+        year TEXT NOT NULL,
+        value NUMERIC NOT NULL,
+        source TEXT NOT NULL
+    );
+
+    -- Inserción de los datos limpios en las tablas.
+    INSERT INTO category (name, dimension)
+        SELECT DISTINCT category, dimension
+        FROM cleaning.homicides;
+
+    INSERT INTO country (iso_code, name, region, subregion, development)
+        SELECT DISTINCT iso3_code, country, region, subregion, development
+        FROM cleaning.homicides;
+
+    INSERT INTO public.homicides (category_id, country_id, indicator, sex, age, year, value, source)
+        SELECT DISTINCT category, iso3_code, indicator, sex, age, year, value, source
+            FROM cleaning.homicides;
+
+    SELECT * FROM public.homicides;
