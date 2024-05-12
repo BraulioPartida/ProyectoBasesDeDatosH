@@ -17,3 +17,4 @@ CREATE TABLE raw.homicides (
     value NUMERIC,
     source TEXT
 );
+
