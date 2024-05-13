@@ -29,7 +29,10 @@
   - dimension: contexto en el que se llevó a cabo el homicidio.
 
 ##:Problema a estudiar:
-    - 
+    - Analizar la cantidad de homicidios por país, subregión y región, así como la eficacia del poder judicial de cada
+    uno y ver si está relacionada con su nivel de desarrollo
+    - Ver la diferencia entre perpetuadores (tipo de arma y relación con la víctima) y víctimas dividos por edad y sexo,
+    y cómo ha cambiado a través de los años
 
 ##:Limpieza de datos:
     - Hicimos una exploración en cada columna para determinar aquellas que contenían caracteres distintos de letras y números
