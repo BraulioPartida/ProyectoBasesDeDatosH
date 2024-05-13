@@ -6,10 +6,10 @@
     );
 
     --(Ejecutar primero lo anterior)
-    /*COPY cleaning.temp_country(name) FROM '' WITH (FORMAT CSV, HEADER true, DELIMITER ',');
+    -- COPY cleaning.temp_country(name) FROM 'C:/Users/aleom/OneDrive - INSTITUTO TECNOLOGICO AUTONOMO DE MEXICO/ITAM/Cuarto semestre/Clases/Bases de Datos/Proyecto/ProyectoBasesDeDatos/Homicidios/ProyectoBasesDeDatosH/country.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',');
 
 
-    UPDATE cleaning.homicides
+    /*UPDATE cleaning.homicides
         SET development = CASE
             WHEN country IN (SELECT TRIM(upper(name)) FROM cleaning.temp_country) THEN 'DEVELOPED'
             WHEN country = 'REPUBLIC OF KOREA' THEN 'DEVELOPED'
@@ -47,7 +47,7 @@
         indicator TEXT NOT NULL,
         sex TEXT NOT NULL,
         age TEXT NOT NULL,
-        year TEXT NOT NULL,
+        year INT NOT NULL,
         value NUMERIC NOT NULL,
         source TEXT NOT NULL
     );
