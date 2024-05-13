@@ -13,6 +13,7 @@
 ## Conjunto de datos:
 - Explicación: Las tablas sobre homicidio intencional incluyen cifras de víctimas de homicidio intencional a nivel de ciudad, nacional, regional y global, y cifras de personas arrestadas/sospechosas o condenadas por homicidio intencional.
 - Link: https://dataunodc.un.org/dp-intentional-homicide-victims
+- Archivo: data_cts_intentional_homicide.csv
 - Atributos:
   - indicator: diferentes tipos de homicidios intencionales a analizar.
   - sex: división por sexo (mujer, hombre) y el total.
@@ -33,11 +34,17 @@
 - Ver la diferencia entre perpetuadores (tipo de arma y relación con la víctima) y víctimas dividos por edad y sexo, y cómo ha cambiado a través de los años.
 
 ## Limpieza de datos:
+- Se creo un esquema, cleaning, dedicado a la limpieza de datos para no afectar los datos originales.
+
 - Hicimos una exploración en cada columna para determinar aquellas que contenían caracteres distintos de letras y números
   - Ejemplo: CURAÃ§AO = CURAZAO
 
 - Filtramos la información necesaria para nuestro proyecto
   - Ejemplo: ALTER TABLE cleaning.homicides DROP COLUMN unit_of_measurement;
+
+- Archivos:
+  - cleaning_data&schema.sql
+  - country.csv
 
 ## Normalización de los datos:
 - Ya que teníamos total conocimiento sobre la base de datos y los atributos que poseía planteamos las siguientes dependencias funcionales:
@@ -49,9 +56,16 @@
   - R3: category, country, indicator, sex, age, year, value, source.
 - El modelo relacional resultante:
 ![Captura de pantalla 2024-05-12 134207](https://github.com/BraulioPartida/ProyectoBasesDeDatosH/assets/124923797/f4b49707-d9f3-44fe-ae50-5444218816e1)
+- Archivo: final_tablas.sql
 
 ## Consulta de datos:
 (preliminar: raw)
+- Archivos:
+  - raw_schema.sql
+  - raw_exploration.sql
 
 ## Análisis de datos:
 limpia
+- Archivos:
+  - final_analytics.sql
+  - powerBL_intentional_homicide.pbix
