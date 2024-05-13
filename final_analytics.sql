@@ -64,14 +64,14 @@
     y cómo ha cambiado a través de los años
 */
 
-    SELECT year, sex, age, COUNT(*) AS num_homicides
+    SELECT year, sex, age, SUM(value) AS num_homicides
         FROM homicides
         WHERE age NOT LIKE 'TOTAL' AND sex NOT LIKE 'TOTAL'
-          AND indicator NOT LIKE '%CONVICTED%'
+          AND indicator NOT LIKE '%CONVICTED%' AND year >= 2010
         GROUP BY year, sex, age, category_id
-        ORDER BY age, num_homicides;
+        ORDER BY year;
 
-    SELECT  year,homicides.category_id, SUM(value)
+    SELECT  year,homicides.category_id, SUM(value) AS num_homicides
         FROM homicides
         WHERE category_id ILIKE 'FIREARMS' OR category_id ILIKE 'WITHOUT A WEAPON/OTHER MECHANISM'
            OR category_id ILIKE 'ANOTHER WEAPON' OR category_id ILIKE 'FIREARMS'
@@ -79,3 +79,7 @@
         GROUP BY homicides.category_id, year
         ORDER BY year;
 
+    SELECT  year,homicides.category_id, SUM(value) AS num_homicides
+        FROM homicides
+        GROUP BY homicides.category_id, year
+        ORDER BY year;

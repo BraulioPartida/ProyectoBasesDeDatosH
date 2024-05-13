@@ -47,7 +47,7 @@
         indicator TEXT NOT NULL,
         sex TEXT NOT NULL,
         age TEXT NOT NULL,
-        year TEXT NOT NULL,
+        year INT NOT NULL,
         value NUMERIC NOT NULL,
         source TEXT NOT NULL
     );
