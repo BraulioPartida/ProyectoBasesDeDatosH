@@ -71,3 +71,11 @@
         GROUP BY year, sex, age, category_id
         ORDER BY age, num_homicides;
 
+    SELECT  year,homicides.category_id, SUM(value)
+        FROM homicides
+        WHERE category_id ILIKE 'FIREARMS' OR category_id ILIKE 'WITHOUT A WEAPON/OTHER MECHANISM'
+           OR category_id ILIKE 'ANOTHER WEAPON' OR category_id ILIKE 'FIREARMS'
+           OR category_id ILIKE 'EXPLOSIVES' OR category_id ILIKE 'SHARP OBJECT'
+        GROUP BY homicides.category_id, year
+        ORDER BY year;
+
