@@ -3,14 +3,14 @@
 - Alexa Morales Pérez Vargas
 - Alejandra Ortiz Montes de Oca
 
-##ÍNDICE:
-*[Conjunto de datos] (#Conjunto de datos)
-*[Problema a estudiar] (#Problema-a-estudiar)
-*[Limpieza de datos] (#Limpieza-de-datos)
-*[Normalización de datos] (#Normalización-de-datos)
-*[Análisis de datos] (#Análisis-de-datos)
+## ÍNDICE:
+* [Conjunto de datos](#conjunto-de-datos)
+* [Problema a estudiar](#problema-a-estudiar)
+* [Limpieza de datos](#limpieza-de-datos)
+* [Normalización de datos](#normalización-de-datos)
+* [Análisis de datos](#análisis-de-datos)
 
-##:Conjunto de datos:
+## Conjunto de datos:
 - Explicación: Las tablas sobre homicidio intencional incluyen cifras de víctimas de homicidio intencional a nivel de ciudad, nacional, regional y global, y cifras de personas arrestadas/sospechosas o condenadas por homicidio intencional.
 - Link: https://dataunodc.un.org/dp-intentional-homicide-victims
 - Atributos:
@@ -28,32 +28,30 @@
   - category: la forma en la que se llevó a cabo el homicidio.
   - dimension: contexto en el que se llevó a cabo el homicidio.
 
-##:Problema a estudiar:
-    - Analizar la cantidad de homicidios por país, subregión y región, así como la eficacia del poder judicial de cada
-    uno y ver si está relacionada con su nivel de desarrollo
-    - Ver la diferencia entre perpetuadores (tipo de arma y relación con la víctima) y víctimas dividos por edad y sexo,
-    y cómo ha cambiado a través de los años
+## Problema a estudiar:
+- Analizar la cantidad de homicidios por país, subregión y región, así como la eficacia del poder judicial de cada uno y ver si está relacionada con su nivel de desarrollo.
+- Ver la diferencia entre perpetuadores (tipo de arma y relación con la víctima) y víctimas dividos por edad y sexo, y cómo ha cambiado a través de los años.
 
-##:Limpieza de datos:
-    - Hicimos una exploración en cada columna para determinar aquellas que contenían caracteres distintos de letras y números
-            Ejemplo: CURAÃ§AO = CURAZAO
+## Limpieza de datos:
+- Hicimos una exploración en cada columna para determinar aquellas que contenían caracteres distintos de letras y números
+  - Ejemplo: CURAÃ§AO = CURAZAO
 
-    - Filtramos la información necesaria para nuestro proyecto
-            Ejemplo: ALTER TABLE cleaning.homicides DROP COLUMN unit_of_measurement;
+- Filtramos la información necesaria para nuestro proyecto
+  - Ejemplo: ALTER TABLE cleaning.homicides DROP COLUMN unit_of_measurement;
 
-##:Normalización de los datos:
+## Normalización de los datos:
 - Ya que teníamos total conocimiento sobre la base de datos y los atributos que poseía planteamos las siguientes dependencias funcionales:
   - {iso} --> {country, region,subregion, development}.
   - {category} --> {dimension, indicato}.
-Se normalizó la base de datos para quedar en cuarta forma normal y resultaron las siguientes relaciones con los encabezados:
+- Se normalizó la base de datos para quedar en cuarta forma normal y resultaron las siguientes relaciones con los encabezados:
   - R1: iso_code, name (country), region, subregion,  development.
   - R2: name (category), dimension.
   - R3: category, country, indicator, sex, age, year, value, source.
-El modelo relacional resultante:
+- El modelo relacional resultante:
 ![Captura de pantalla 2024-05-12 134207](https://github.com/BraulioPartida/ProyectoBasesDeDatosH/assets/124923797/f4b49707-d9f3-44fe-ae50-5444218816e1)
 
-##:Consulta de datos:
+## Consulta de datos:
 (preliminar: raw)
 
-##: Análisis de datos:
+## Análisis de datos:
 limpia
