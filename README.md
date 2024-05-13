@@ -15,11 +15,11 @@
 - Link: https://dataunodc.un.org/dp-intentional-homicide-victims
 - Archivo: data_cts_intentional_homicide.csv
 - Atributos:
-  - indicator: diferentes tipos de homicidios intencionales a analizar.
+  - indicator: víctimas o arrestas.
   - sex: división por sexo (mujer, hombre) y el total.
   - age: grupos de edades de las personas que fueron asesinadas y el total.
   - year: año en el que se llevó a cabo el homicidio.
-  - value: valor que depende del indicador.
+  - value: las veces que se llevó a cabo el tipo de homicidio, es un estimado.
   - source: códigos que representan de dónde se consiguió es información.
   - iso_code: código que representa el nombre de los países.
   - country: nombre del país.
