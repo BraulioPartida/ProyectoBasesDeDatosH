@@ -23,7 +23,7 @@
         WHERE indicator NOT LIKE '%CONVICTED%'
         GROUP BY country.region;
 
-        SELECT country.name, country.development, sum(homicides.value)
+    SELECT country.name, country.development, sum(homicides.value)
         FROM country
         JOIN public.homicides on country.iso_code = country_id
         WHERE indicator LIKE '%CONVICTED%'
@@ -59,7 +59,6 @@
             ORDER BY category_id
                 );
 
-
 /*
     Ver la diferencia entre perpetuadores (tipo de arma y relación con la víctima) y víctimas dividos por edad y sexo,
     y cómo ha cambiado a través de los años
@@ -67,7 +66,8 @@
 
     SELECT year, sex, age, COUNT(*) AS num_homicides
         FROM homicides
-        WHERE age NOT LIKE 'TOTAL' AND sex NOT LIKE 'TOTAL' AND indicator NOT LIKE '%CONVICTED%'
-        GROUP BY year, sex, age
-        ORDER BY year, sex, age;
+        WHERE age NOT LIKE 'TOTAL' AND sex NOT LIKE 'TOTAL'
+          AND indicator NOT LIKE '%CONVICTED%'
+        GROUP BY year, sex, age, category_id
+        ORDER BY age, num_homicides;
 
