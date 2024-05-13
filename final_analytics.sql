@@ -41,8 +41,33 @@
         WHERE indicator LIKE '%CONVICTED%'
         GROUP BY country.region;
 
+    SELECT DISTINCT category_id, MAX(homicides.value) OVER w AS max_eficacia_judicial
+        FROM country
+        JOIN public.homicides ON country.iso_code = homicides.country_id
+        WHERE indicator ILIKE '%DEATH%' OR indicator ILIKE '%VICTIMS%'
+        WINDOW w AS(
+            PARTITION BY category_id
+            ORDER BY category_id
+                );
+
+    SELECT DISTINCT category_id, AVG(homicides.value) OVER w AS avg_eficacia_judicial
+        FROM country
+        JOIN public.homicides ON country.iso_code = homicides.country_id
+        WHERE indicator ILIKE '%DEATH%' OR indicator ILIKE '%VICTIMS%'
+        WINDOW w AS(
+            PARTITION BY category_id
+            ORDER BY category_id
+                );
+
+
 /*
     Ver la diferencia entre perpetuadores (tipo de arma y relación con la víctima) y víctimas dividos por edad y sexo,
     y cómo ha cambiado a través de los años
 */
+
+    SELECT year, sex, age, COUNT(*) AS num_homicides
+        FROM homicides
+        WHERE age NOT LIKE 'TOTAL' AND sex NOT LIKE 'TOTAL' AND indicator NOT LIKE '%CONVICTED%'
+        GROUP BY year, sex, age
+        ORDER BY year, sex, age;
 
