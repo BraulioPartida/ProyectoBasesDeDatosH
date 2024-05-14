@@ -11,15 +11,15 @@
 * [Análisis de datos](#análisis-de-datos)
 
 ## Conjunto de datos:
-- Explicación: Las tablas sobre homicidio intencional incluyen cifras de víctimas de homicidio intencional a nivel de ciudad, nacional, regional y global, y cifras de personas arrestadas/sospechosas o condenadas por homicidio intencional.
+- Explicación: Las tablas sobre homicidio intencional incluye cifras de víctimas de homicidio intencional a nivel de ciudad, nacional, regional y global, y cifras de personas arrestadas/sospechosas o condenadas por homicidio intencional.
 - Link: https://dataunodc.un.org/dp-intentional-homicide-victims
 - Archivo: data_cts_intentional_homicide.csv
 - Atributos:
-  - indicator: diferentes tipos de homicidios intencionales a analizar.
+  - indicator: víctimas o arrestadas.
   - sex: división por sexo (mujer, hombre) y el total.
   - age: grupos de edades de las personas que fueron asesinadas y el total.
   - year: año en el que se llevó a cabo el homicidio.
-  - value: valor que depende del indicador.
+  - value: las veces que se llevó a cabo el tipo de homicidio, es un estimado.
   - source: códigos que representan de dónde se consiguió es información.
   - iso_code: código que representa el nombre de los países.
   - country: nombre del país.
